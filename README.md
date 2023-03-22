@@ -408,89 +408,22 @@ import { FormEvent } from "react";
 
 
 
+## 3. input绑定状态
 
+### 1. App.tsx 定义状态
 
-
-
-
-
-
-
-### 1. App.tsx 基础用法
-
-`````js
-import React, { useState } from 'react';
-// JS
-// const input = document.getElementById('myText');
-// const inputValue = input.value
-
-// React
-// const handleChange = (e) => {};
-// <input value={text} onChange={(e) => handleChange} />;
-
-function App() {
-  return (
-    <>
-      <div>React中表单的使用</div>
-    </>
-  );
-}
-
-export default App;
-`````
-
-### 2. App.tsx 表单细节
-
-`````js
-import React, { FormEvent, useState } from "react";
-
-function App() {
-  // 2
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Hello World");
-  };
-
-  return (
-    <>
-      {/* 1 */}
-      <article>
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="form-control">
-            <label htmlFor="usename">名字 : </label>
-            <input type="text" id="usename" name="usename" />
-          </div>
-          <div className="form-control">
-            <label htmlFor="email">邮箱 : </label>
-            <input type="email" id="email" name="email" />
-          </div>
-
-          <button type="submit" onClick={handleSubmit}>
-            添加
-          </button>
-        </form>
-      </article>
-    </>
-  );
-}
-
-export default App;
-`````
-
-### 4. App.tsx控制Form的使用
-
-`````js
+``````tsx
 import React, { useState } from 'react'
 
 const ControlledInputs = () => {
   // 1. 定义状态
   const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+	const [title, setTitle] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // 4. 打印查看
-    console.log(username, email)
+    console.log(username, title)
   }
   return (
     <>
@@ -506,8 +439,8 @@ const ControlledInputs = () => {
           ...
             <input
               ...
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
          ...
     </>
@@ -515,9 +448,11 @@ const ControlledInputs = () => {
 }
 
 export default ControlledInputs
-`````
+``````
 
-### 5. App.tsx 添加数据和展示数据
+
+
+## 4. App.tsx 添加数据和展示数据
 
 ``````js
 import React, { useState } from 'react'
