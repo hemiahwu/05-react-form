@@ -519,71 +519,66 @@ export default ControlledInputs
 
 ### 1. App.tsx
 
-* 拷贝1-controlled-inputs代码
+* 定义整合状态
 
-`````js
-import React, { useState } from 'react'
+`````tsx
+const [user, setUser] = useState<User>({ username: "", title: "" });
+`````
 
-// 定义类型
-interface User {
+* 定义User类型
+
+`````tsx
+ interface User {
   username: string;
-  email: string;
+  title: string;
 }
+`````
 
-const ControlledInputs = () => {
-  
-  const [people, setPeople] = useState([])
-  // 1. 定义状态  删除上方的username和email
-	const [user, setUser] = useState<User>({ username: "", email: "" });
+* 调整状态绑定
 
-  // 5. 更新数据
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (user.username && user.email) {
-      const newUser = { ...user, id: new Date().getTime().toString() }
-      setPeople([...people, newUser])
-      setUser({ username: '', email: '' })
-    }
-  }
-	// 4. 定义事件
-  const handleChange = (e) => {
-    console.log(e.target.name)
-    console.log(e.target.value)
-    const name = e.target.name
-    const value = e.target.value
-    setUser({ ...user, [name]: value })
-  }
-  return (
-    <>
-      <article>
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="form-control">
-            <label htmlFor="usename">名字 : </label>
-            <input
-              ...
-							// 2. 绑定状态
-              value={user.username}
-							// 3. 触发事件
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-control">
-            <label htmlFor="email">邮箱 : </label>
-            <input
-             ...
-              value={user.email}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit">添加</button>
-        </form>
-        ...
-      </article>
-    </>
-  )
+`````tsx
+<input
+  ...
+  // 2. 绑定状态
+  value={user.username}
+  // 3. 触发事件
+  onChange={handleChange}
+/>
+`````
+
+* 触发handleChange事件
+
+`````tsx
+const handleChange = (e: FormEvent<HTMLInputElement>) => {
+  const { name, value } = e.target as NTEventTarget;
+  setUser({ ...user, [name]: value });
+};
+`````
+
+* 配置类型
+
+`````tsx
+interface NTEventTarget extends EventTarget {
+  name: string;
+  value: string;
 }
+`````
 
-export default ControlledInputs
+* 处理submit
+
+`````tsx
+const handleSubmit = (e) => {
+  e.preventDefault()
+  if (user.username && user.email) {
+    const person = { ...user, id: crypto.randomUUID() };
+    // 更新数据
+    setPeople((prev: Person[]) => {
+      return [...prev, person];
+    });
+
+    setUser({ username: "", title: "" });
+  }
+}
 `````
 
 

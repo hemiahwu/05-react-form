@@ -14,27 +14,46 @@ interface Person {
   title: string;
 }
 
+interface User {
+  username: string;
+  title: string;
+}
+
+interface NTEventTarget extends EventTarget {
+  name: string;
+  value: string;
+}
+
 function App() {
-  const [username, setUsername] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
+  // const [username, setUsername] = useState<string>("");
+  // const [title, setTitle] = useState<string>("");
+
+  const [user, setUser] = useState<User>({ username: "", title: "" });
 
   const [people, setPeople] = useState<Person[]>([]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (username && title) {
+    if (user.username && user.title) {
       // 定义数据
-      const person = { id: crypto.randomUUID(), username, title };
+      const person = { ...user, id: crypto.randomUUID() };
 
       // 更新数据
       setPeople((prev: Person[]) => {
         return [...prev, person];
       });
 
-      setUsername("");
-      setTitle("");
+      setUser({ username: "", title: "" });
     }
   };
+
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
+    // 动态属性赋值
+    const { name, value } = e.target as NTEventTarget;
+    // console.log({ [name]: value });
+    setUser({ ...user, [name]: value });
+  };
+
   return (
     <article>
       <form className="form" onSubmit={handleSubmit}>
@@ -42,10 +61,10 @@ function App() {
           <label htmlFor="usename">名字 : </label>
           <input
             type="text"
-            id="usename"
-            name="usename"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="username"
+            name="username"
+            value={user.username}
+            onChange={handleChange}
           />
         </div>
         <div className="form-control">
@@ -54,8 +73,8 @@ function App() {
             type="text"
             id="title"
             name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={user.title}
+            onChange={handleChange}
           />
         </div>
 
