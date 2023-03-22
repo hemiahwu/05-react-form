@@ -461,7 +461,7 @@ import React, { useState } from 'react'
 interface Person {
   id: string;
   username: string;
-  email: string;
+  title: string;
 }
 
 const ControlledInputs = () => {
@@ -484,7 +484,7 @@ const ControlledInputs = () => {
       });
       // 5. 置为空
       setUsername('')
-      setEmail('')
+      setTitle('')
     } else {
       console.log('empty values')
     }
@@ -501,7 +501,7 @@ const ControlledInputs = () => {
           return (
             <div className="item" key={id}>
               <h4>{username}</h4>
-              <p>{email}</p>
+              <p>{title}</p>
             </div>
           )
         })}
