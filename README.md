@@ -12,7 +12,7 @@ Git仓库地址: https://github.com/hemiahwu/05-react-form
 
 课程答疑微信: 
 
-<img src="https://i.postimg.cc/YCWHJWTw/Wechat-IMG233.jpg" alt="WechatIMG233"  />
+web1024b
 
 ## 1. 课程样式
 
